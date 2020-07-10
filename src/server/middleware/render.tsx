@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import App from '../../App';
+import App from '../../assets/components/App';
 
 const renderMiddleware = () => (req: Request, res: Response) => {
   let html = req.html || '';
