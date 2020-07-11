@@ -21,17 +21,10 @@ class TicTacToe extends Rules {
         if (this.isWinner || this.grid.movesMade >= 9) return this.printWinner();
 
         if (this.player === PlayerType.Computer) {
-            if (this.difficulty === DifficultyType.Unbeatable) {
-                let coord: CoordinateType = this.unbeatableMove();
-                x = coord.x;
-                y = coord.y;
-                this.grid.set(x, y, this.player);
-            } else {
-                let coord: CoordinateType = this.beatableMove();
-                x = coord.x;
-                y = coord.y;
-                this.grid.set(x, y, this.player);
-            }
+            const difficulty = this.difficulty === DifficultyType.Unbeatable ? this.unbeatableMove : this.beatableMove;
+            let coord: CoordinateType = difficulty();
+            x = coord.x; y = coord.y;
+            this.grid.set(x, y, this.player);
         } else if (x && y) {
             this.grid.set(x, y, this.player);
         } else {
@@ -122,8 +115,8 @@ class TicTacToe extends Rules {
         let grid = this.grid.get();
 
         let score = 0;
-        let top_left_diagnial = [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }]
-        let top_right_diagnial = [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }]
+        let top_left_diagnial = [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }];
+        let top_right_diagnial = [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }];
 
         if (!grid[coordinate.y].find(x => grid[coordinate.y][x] === PossibilityType.Player)) score += 1;
         if (![0, 1, 2].find(y => grid[y][coordinate.x] === PossibilityType.Player)) score += 1;
