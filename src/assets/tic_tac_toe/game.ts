@@ -1,46 +1,45 @@
-import { PlayerType, PossibilityType, DifficultyType, CoordinateType, GridType } from './types';
+import { PlayerType, DifficultyType, CoordinateType, GridType } from './types';
 import Grid from './grid';
-import Rules from './rules';
 
 
-class Game extends Rules {
+class Game {
     public player: PlayerType;
     public grid: Grid;
     public difficulty: DifficultyType;
     public isWinner: boolean;
 
     constructor(difficulty: DifficultyType) {
-        super();
         this.player = PlayerType.Player;
         this.grid = new Grid();
         this.difficulty = difficulty;
         this.isWinner = false;
     }
 
-    public move(x?: number, y?: number) {
-        if (this.isWinner || this.grid.movesMade >= 9) return this.printWinner();
+    move(x?: number, y?: number) {
+        if (this.isWinner || this.grid.movesMade >= 9) return;
 
         if (this.player === PlayerType.Computer) {
-            const difficulty = this.difficulty === DifficultyType.Unbeatable ? this.unbeatableMove : this.beatableMove;
+            const difficulty = this.difficulty === DifficultyType.Unbeatable ? () => this.unbeatableMove() : () => this.beatableMove();
             let coord: CoordinateType = difficulty();
             x = coord.x; y = coord.y;
+        }
+
+        if (typeof x === 'number' && typeof y === 'number') {
             this.grid.set(x, y, this.player);
-        } else if (x && y) {
-            this.grid.set(x, y, this.player);
-        } else {
-            return 'error';
         }
 
         if (this.hasWinner()) {
             this.isWinner = true;
-            return this.printWinner();
         } else if (this.grid.movesMade >= 9) {
             this.isWinner = true;
-            this.player = PlayerType.Tied;
-            return this.printWinner();
-        } else {
+            this.player = PlayerType.Empty;
+        } else if (typeof x === 'number' && typeof y === 'number') {
             this.switchPlayer();
         }
+    }
+
+    printWinner(): string {
+        return this.getWinner();
     }
 
     private unbeatableMove(): CoordinateType {
@@ -55,48 +54,48 @@ class Game extends Rules {
         return this.blockMostWinningPositions();
     }
 
-    private canWinInOneMove(player: PossibilityType): CoordinateType | void {
-        let grid = this.grid.get();
+    private canWinInOneMove(player: PlayerType): CoordinateType | void {
+        let grid = this.grid.grid;
 
-        if (grid[0][0] === PossibilityType.Empty && grid[1][1] === player && grid[2][2] === player) {
+        if (grid[0][0] === PlayerType.Empty && grid[1][1] === player && grid[2][2] === player) {
             return { x: 0, y: 0 };
-        } else if (grid[0][0] === player && grid[1][1] === PossibilityType.Empty && grid[2][2] === player) {
+        } else if (grid[0][0] === player && grid[1][1] === PlayerType.Empty && grid[2][2] === player) {
             return { x: 1, y: 1 };
-        } else if (grid[0][0] === player && grid[1][1] === player && grid[2][2] === PossibilityType.Empty) {
+        } else if (grid[0][0] === player && grid[1][1] === player && grid[2][2] === PlayerType.Empty) {
             return { x: 0, y: 0 };
-        } else if (grid[0][2] === PossibilityType.Empty && grid[1][1] === player && grid[0][2] === player) {
+        } else if (grid[0][2] === PlayerType.Empty && grid[1][1] === player && grid[0][2] === player) {
             return { x: 2, y: 0 };
-        } else if (grid[0][2] === player && grid[1][1] === PossibilityType.Empty && grid[0][2] === player) {
+        } else if (grid[0][2] === player && grid[1][1] === PlayerType.Empty && grid[0][2] === player) {
             return { x: 1, y: 1 };
-        } else if (grid[0][2] === player && grid[1][1] === player && grid[2][0] === PossibilityType.Empty) {
+        } else if (grid[0][2] === player && grid[1][1] === player && grid[2][0] === PlayerType.Empty) {
             return { x: 0, y: 2 };
         }
 
         for (let i = 0; i < grid.length; i++) {
-            let row: PossibilityType[] = grid[i];
+            let row: PlayerType[] = grid[i];
 
-            if (row[0] === player && row[1] === player && row[2] === PossibilityType.Empty) {
+            if (row[0] === player && row[1] === player && row[2] === PlayerType.Empty) {
                 return { x: 2, y: i };
-            } else if (row[0] === player && row[2] === player && row[1] === PossibilityType.Empty) {
+            } else if (row[0] === player && row[2] === player && row[1] === PlayerType.Empty) {
                 return { x: 1, y: i };
-            } else if (row[2] === player && row[1] === player && row[0] === PossibilityType.Empty) {
+            } else if (row[2] === player && row[1] === player && row[0] === PlayerType.Empty) {
                 return { x: 0, y: i };
-            } else if (grid[0][i] === player && grid[1][i] === player && grid[2][i] === PossibilityType.Empty) {
+            } else if (grid[0][i] === player && grid[1][i] === player && grid[2][i] === PlayerType.Empty) {
                 return { x: i, y: 2 };
-            } else if (grid[0][i] === player && grid[2][i] === player && grid[1][i] === PossibilityType.Empty) {
+            } else if (grid[0][i] === player && grid[2][i] === player && grid[1][i] === PlayerType.Empty) {
                 return { x: i, y: 1 };
-            } else if (grid[2][i] === player && grid[1][i] === player && grid[0][i] === PossibilityType.Empty) {
+            } else if (grid[2][i] === player && grid[1][i] === player && grid[0][i] === PlayerType.Empty) {
                 return { x: i, y: 0 };
             }
         }
     }
 
     private canHumanWin(): CoordinateType | void {
-        return this.canWinInOneMove(PossibilityType.Player);
+        return this.canWinInOneMove(PlayerType.Player);
     }
 
     private canComputerWin(): CoordinateType | void {
-        return this.canWinInOneMove(PossibilityType.Computer);
+        return this.canWinInOneMove(PlayerType.Computer);
     }
 
     private blockMostWinningPositions(): CoordinateType {
@@ -112,13 +111,13 @@ class Game extends Rules {
     }
 
     private tallyWinningPossibilities(coordinate: CoordinateType): number {
-        let grid = this.grid.get();
+        let grid: GridType = this.grid.grid;
 
         let score = 0;
-        let tld = this.getLeftDiagnial(grid);
-        let trd = this.getRightDiagnial(grid);
-        let row = this.getRow(grid, coordinate.y);
-        let col = this.getCol(grid, coordinate.x);
+        let tld = this.getLeftDiagnial();
+        let trd = this.getRightDiagnial();
+        let row = this.getRow(coordinate.y);
+        let col = this.getCol(coordinate.x);
 
         if (!this.hasPlayer(row)) score += this.tallyScore(row);
         if (!this.hasPlayer(col)) score += this.tallyScore(col);
@@ -128,20 +127,20 @@ class Game extends Rules {
         return score;
     }
 
-    private hasPlayer(row: number[]): boolean {
-        return !!row.find(e => e === PossibilityType.Player);
+    private hasPlayer(row: PlayerType[]): boolean {
+        return !!row.find(e => e === PlayerType.Player);
     }
 
-    private getRow(grid: GridType, y: number): PossibilityType[] {
-        return grid[y];
+    private getRow(y: number): PlayerType[] {
+        return this.grid.grid[y];
     }
 
-    private getCol(grid: GridType, x: number): PossibilityType[] {
-        return [0,1,2].map(y => grid[y][x]);
+    private getCol(x: number): PlayerType[] {
+        return [0,1,2].map(y => this.grid.grid[y][x]);
     }
 
-    private getLeftDiagnial(grid: GridType): PossibilityType[] {
-        return [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].map(({ x, y }) => grid[y][x]);
+    private getLeftDiagnial(): PlayerType[] {
+        return [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].map(({ x, y }) => this.grid.grid[y][x]);
     }
 
     private isOnLeftDiagnial(coordinate: CoordinateType): boolean {
@@ -152,18 +151,85 @@ class Game extends Rules {
         return !![{ x: 0, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 0 }].find(({ x, y }) =>  x === coordinate.x && y === coordinate.y);
     }
 
-    private getRightDiagnial(grid: GridType): PossibilityType[] {
-        return [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }].map(({ x, y }) => grid[y][x]);
+    private getRightDiagnial(): PlayerType[] {
+        return [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }].map(({ x, y }) => this.grid.grid[y][x]);
     }
 
-    private tallyScore(row: PossibilityType[]): number {
-        return row.reduce((acc, item) => acc + (item === PossibilityType.Computer ? 1 : 0), 1);
+    private tallyScore(row: PlayerType[]): number {
+        return row.reduce((acc, item) => acc + (item === PlayerType.Computer ? 1 : 0), 1);
     }
 
     private beatableMove(): CoordinateType {
         const possibilities = this.allPossibilities();
         const randomIndex = Math.floor(Math.random() * possibilities.length);
         return possibilities[randomIndex];
+    }
+
+    private getWinner(): string {
+        if (!this.isWinner) return 'Game still in session';
+
+        if (this.player === PlayerType.Player) return 'You win!'
+        else if (this.player === PlayerType.Computer) return 'Computer wins!'
+        else if (this.player === PlayerType.Empty) return 'Tie!'
+
+        return 'error';
+    }
+
+    private hasWinner(): boolean {
+        let grid = this.grid.grid;
+        if (this.checkDiagonials()) return true;
+
+        for (let i = 0; i < 3; i++) {
+            if (this.checkRow(grid[i])) return true;
+            else if (this.checkColumn(i)) return true;
+        }
+
+        return false;
+    }
+
+    private checkRow(row: PlayerType[]): boolean {
+        return row[0] === this.player &&
+            row[1] === this.player &&
+            row[2] === this.player;
+    }
+
+    private checkColumn(index: number): boolean {
+        return this.grid.grid[0][index] === this.player &&
+            this.grid.grid[1][index] === this.player &&
+            this.grid.grid[2][index] === this.player;
+    }
+
+    private checkDiagonials(): boolean {
+        return (
+            this.grid.grid[0][0] === this.player &&
+            this.grid.grid[1][1] === this.player &&
+            this.grid.grid[2][2] === this.player
+        ) || (
+            this.grid.grid[0][2] === this.player &&
+            this.grid.grid[1][1] === this.player &&
+            this.grid.grid[2][0] === this.player
+        );
+    }
+
+    private switchPlayer(): void {
+        if (this.player === PlayerType.Computer) {
+            this.player = PlayerType.Player;
+        } else {
+            this.player = PlayerType.Computer;
+        }
+    }
+
+    private allPositions(): CoordinateType[] {
+        return [
+            { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 },
+            { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 },
+            { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
+        ]
+    }
+
+    private allPossibilities(): CoordinateType[] {
+        const positions = this.allPositions();
+        return positions.filter(({ x, y }) => this.grid.grid[y][x] === PlayerType.Empty);
     }
 
 }

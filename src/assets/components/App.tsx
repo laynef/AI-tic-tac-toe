@@ -8,21 +8,19 @@ import GameOver from './GameOver';
 
 const App: React.FC = () => {
   const [game, setGame]: [any, (state: any) => void] = React.useState(null);
+  const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(null);
+
   const [showLandingPage, setLandingPage] = React.useState(true);
   const [showGamePlay, setGamePlay] = React.useState(false);
   const [showLeaderboard, setLeaderBoard] = React.useState(false);
-  const [gameboard, setGameBoard] = React.useState(null);
   const [gameOverMessage, setGameOverMessage] = React.useState(null);
-
-
-  const getGameBoard = () => game && game.grid && game.grid.get ? game.grid.get() : [[0,0,0],[0,0,0],[0,0,0]]
 
   const startNewGame = (difficulty: DifficultyType): void => {
     const ticTacToe = new Game(difficulty);
     setGame(ticTacToe);
     setLandingPage(false);
     setGamePlay(true);
-    setGameBoard(getGameBoard());
+    setGameBoard(ticTacToe.grid.grid);
   };
 
   const setGameOver = (): void => {
@@ -33,7 +31,7 @@ const App: React.FC = () => {
   const makeTurn = (x?: number, y?: number): void => {
     if (game && !game.isWinner) {
       game.move(x, y);
-      setGameBoard(getGameBoard());
+      setGameBoard(game.grid.grid.slice());
     } else {
       return;
     }
