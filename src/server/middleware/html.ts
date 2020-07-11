@@ -9,12 +9,12 @@ const htmlMiddleware = () => (
 ) => {
   const publicPath = path.join(__dirname, '/public');
 
-  fs.readFile(`${publicPath}/app.html`, 'utf8', (err, html) => {
-    if (!err) {
+  fs.readFile(`${publicPath}/app.html`, 'utf8', (error, html) => {
+    if (!error) {
       req.html = html;
       next();
     } else {
-      res.status(500).send('Error parsing app.html');
+      res.status(500).json({ error });
     }
   });
 };

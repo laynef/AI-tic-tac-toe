@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../images/logo.svg';
+import TicTacToe from '../tic_tac_toe/game';
 
 
 const App: React.FC = () => {
