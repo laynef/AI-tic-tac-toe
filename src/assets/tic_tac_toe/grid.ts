@@ -2,19 +2,19 @@ import { GridType } from './types';
 
 
 class Grid {
-    grid: GridType;
-    movesMade: number;
+    public grid: GridType;
+    public movesMade: number;
 
     constructor() {
         this.grid = [[0,0,0],[0,0,0],[0,0,0]];
         this.movesMade = 0;
     }
 
-    get() {
+    public get() {
         return this.grid;
     }
 
-    set(x: number, y: number, value: number) {
+    public set(x: number, y: number, value: number) {
         this.grid[y][x] = value;
         this.movesMade += 1;
     }

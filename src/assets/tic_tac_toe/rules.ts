@@ -13,7 +13,7 @@ class Rules {
         this.isWinner = false;
     }
 
-    printWinner(): string {
+    public printWinner(): string {
         if (!this.isWinner) return 'Game still in session';
 
         if (this.player === PlayerType.Player) return 'You win!'
@@ -23,7 +23,7 @@ class Rules {
         return 'error';
     }
 
-    hasWinner(): boolean {
+    public hasWinner(): boolean {
         let grid = this.grid.get();
         if (this.checkDiagonials(grid)) return true;
 
@@ -35,19 +35,19 @@ class Rules {
         return false;
     }
 
-    checkRow(row: number[]): boolean {
+    private checkRow(row: number[]): boolean {
         return row[0] === this.player &&
             row[1] === this.player &&
             row[2] === this.player;
     }
 
-    checkColumn(grid: number[][], index: number): boolean {
+    private checkColumn(grid: number[][], index: number): boolean {
         return grid[0][index] === this.player &&
             grid[1][index] === this.player &&
             grid[2][index] === this.player;
     }
 
-    checkDiagonials(grid: number[][]): boolean {
+    private checkDiagonials(grid: number[][]): boolean {
         return (
             grid[0][0] === this.player &&
             grid[1][1] === this.player &&
@@ -59,7 +59,7 @@ class Rules {
         );
     }
 
-    switchPlayer(): void {
+    public switchPlayer(): void {
         if (this.player === PlayerType.Computer) {
             this.player = PlayerType.Player;
         } else {
@@ -67,7 +67,7 @@ class Rules {
         }
     }
 
-    allPositions() {
+    public allPositions() {
         return [
             { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 },
             { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 },
@@ -75,7 +75,7 @@ class Rules {
         ]
     }
 
-    allPossibilities() {
+    public allPossibilities() {
         const grid = this.grid.get();
         const positions = this.allPositions();
         return positions.filter(({ x, y }) => grid[y][x] === PossibilityType.Empty);

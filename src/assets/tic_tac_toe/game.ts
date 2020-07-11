@@ -4,10 +4,10 @@ import Rules from './rules';
 
 
 class Game extends Rules {
-    player: PlayerType;
-    grid: Grid;
-    difficulty: DifficultyType;
-    isWinner: boolean;
+    public player: PlayerType;
+    public grid: Grid;
+    public difficulty: DifficultyType;
+    public isWinner: boolean;
 
     constructor(difficulty: DifficultyType) {
         super();
@@ -17,7 +17,7 @@ class Game extends Rules {
         this.isWinner = false;
     }
 
-    move(x?: number, y?: number) {
+    public move(x?: number, y?: number) {
         if (this.isWinner || this.grid.movesMade >= 9) return this.printWinner();
 
         if (this.player === PlayerType.Computer) {
@@ -43,7 +43,7 @@ class Game extends Rules {
         }
     }
 
-    unbeatableMove(): CoordinateType {
+    private unbeatableMove(): CoordinateType {
         // Decided to not use the minimax algorithm
         // It is not performant to check every move to be unstoppable
         let comWin = this.canComputerWin();
@@ -55,7 +55,7 @@ class Game extends Rules {
         return this.blockMostWinningPositions();
     }
 
-    canWinInOneMove(player: PossibilityType): CoordinateType | void {
+    private canWinInOneMove(player: PossibilityType): CoordinateType | void {
         let grid = this.grid.get();
 
         if (grid[0][0] === PossibilityType.Empty && grid[1][1] === player && grid[2][2] === player) {
@@ -91,15 +91,15 @@ class Game extends Rules {
         }
     }
 
-    canHumanWin(): CoordinateType | void {
+    private canHumanWin(): CoordinateType | void {
         return this.canWinInOneMove(PossibilityType.Player);
     }
 
-    canComputerWin(): CoordinateType | void {
+    private canComputerWin(): CoordinateType | void {
         return this.canWinInOneMove(PossibilityType.Computer);
     }
 
-    blockMostWinningPositions(): CoordinateType {
+    private blockMostWinningPositions(): CoordinateType {
         const possibilities = this.allPossibilities();
         const allScores = possibilities.map(coord => this.tallyWinningPossibilities(coord));
         const maxScore = Math.max(...allScores);
@@ -111,7 +111,7 @@ class Game extends Rules {
         return possibilities[0];
     }
 
-    tallyWinningPossibilities(coordinate: CoordinateType): number {
+    private tallyWinningPossibilities(coordinate: CoordinateType): number {
         let grid = this.grid.get();
 
         let score = 0;
@@ -128,39 +128,39 @@ class Game extends Rules {
         return score;
     }
 
-    hasPlayer(row: number[]): boolean {
+    private hasPlayer(row: number[]): boolean {
         return !!row.find(e => e === PossibilityType.Player);
     }
 
-    getRow(grid: GridType, y: number): PossibilityType[] {
+    private getRow(grid: GridType, y: number): PossibilityType[] {
         return grid[y];
     }
 
-    getCol(grid: GridType, x: number): PossibilityType[] {
+    private getCol(grid: GridType, x: number): PossibilityType[] {
         return [0,1,2].map(y => grid[y][x]);
     }
 
-    getLeftDiagnial(grid: GridType): PossibilityType[] {
+    private getLeftDiagnial(grid: GridType): PossibilityType[] {
         return [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].map(({ x, y }) => grid[y][x]);
     }
 
-    isOnLeftDiagnial(coordinate: CoordinateType): boolean {
+    private isOnLeftDiagnial(coordinate: CoordinateType): boolean {
         return !![{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].find(({ x, y }) =>  x === coordinate.x && y === coordinate.y);
     }
 
-    isOnRightDiagnial(coordinate: CoordinateType): boolean {
+    private isOnRightDiagnial(coordinate: CoordinateType): boolean {
         return !![{ x: 0, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 0 }].find(({ x, y }) =>  x === coordinate.x && y === coordinate.y);
     }
 
-    getRightDiagnial(grid: GridType): PossibilityType[] {
+    private getRightDiagnial(grid: GridType): PossibilityType[] {
         return [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }].map(({ x, y }) => grid[y][x]);
     }
 
-    tallyScore(row: PossibilityType[]): number {
+    private tallyScore(row: PossibilityType[]): number {
         return row.reduce((acc, item) => acc + (item === PossibilityType.Computer ? 1 : 0), 1);
     }
 
-    beatableMove(): CoordinateType {
+    private beatableMove(): CoordinateType {
         const possibilities = this.allPossibilities();
         const randomIndex = Math.floor(Math.random() * possibilities.length);
         return possibilities[randomIndex];
