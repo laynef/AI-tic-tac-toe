@@ -118,12 +118,16 @@ class TicTacToe extends Rules {
         let top_left_diagnial = [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }];
         let top_right_diagnial = [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }];
 
-        if (!grid[coordinate.y].find(x => grid[coordinate.y][x] === PossibilityType.Player)) score += 1;
-        if (![0, 1, 2].find(y => grid[y][coordinate.x] === PossibilityType.Player)) score += 1;
-        if (top_left_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_left_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += 1;
-        if (top_right_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_right_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += 1;
+        if (!grid[coordinate.y].find(x => grid[coordinate.y][x] === PossibilityType.Player)) score += this.tallyScore(grid[coordinate.y]);
+        if (![0, 1, 2].find(y => grid[y][coordinate.x] === PossibilityType.Player)) score += this.tallyScore([0, 1, 2].map(y => grid[y][coordinate.x]));
+        if (top_left_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_left_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += this.tallyScore(top_left_diagnial.map(({ x, y }) => grid[y][x]));
+        if (top_right_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_right_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += this.tallyScore(top_right_diagnial.map(({ x, y }) => grid[y][x]));
 
         return score;
+    }
+
+    tallyScore(row: PossibilityType[]): number {
+        return row.reduce((acc, item) => acc + (item === PossibilityType.Computer ? 1 : 0), 1);
     }
 
     beatableMove(): CoordinateType {
