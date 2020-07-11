@@ -1,9 +1,9 @@
-import { PlayerType, PossibilityType, DifficultyType, CoordinateType } from './types';
+import { PlayerType, PossibilityType, DifficultyType, CoordinateType, GridType } from './types';
 import Grid from './grid';
 import Rules from './rules';
 
 
-class TicTacToe extends Rules {
+class Game extends Rules {
     player: PlayerType;
     grid: Grid;
     difficulty: DifficultyType;
@@ -115,15 +115,45 @@ class TicTacToe extends Rules {
         let grid = this.grid.get();
 
         let score = 0;
-        let top_left_diagnial = [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }];
-        let top_right_diagnial = [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }];
+        let tld = this.getLeftDiagnial(grid);
+        let trd = this.getRightDiagnial(grid);
+        let row = this.getRow(grid, coordinate.y);
+        let col = this.getCol(grid, coordinate.x);
 
-        if (!grid[coordinate.y].find(x => grid[coordinate.y][x] === PossibilityType.Player)) score += this.tallyScore(grid[coordinate.y]);
-        if (![0, 1, 2].find(y => grid[y][coordinate.x] === PossibilityType.Player)) score += this.tallyScore([0, 1, 2].map(y => grid[y][coordinate.x]));
-        if (top_left_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_left_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += this.tallyScore(top_left_diagnial.map(({ x, y }) => grid[y][x]));
-        if (top_right_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_right_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += this.tallyScore(top_right_diagnial.map(({ x, y }) => grid[y][x]));
+        if (!this.hasPlayer(row)) score += this.tallyScore(row);
+        if (!this.hasPlayer(col)) score += this.tallyScore(col);
+        if (this.isOnLeftDiagnial(coordinate) && !this.hasPlayer(tld)) score += this.tallyScore(tld);
+        if (this.isOnRightDiagnial(coordinate) && !this.hasPlayer(trd)) score += this.tallyScore(trd);
 
         return score;
+    }
+
+    hasPlayer(row: number[]): boolean {
+        return !!row.find(e => e === PossibilityType.Player);
+    }
+
+    getRow(grid: GridType, y: number): PossibilityType[] {
+        return grid[y];
+    }
+
+    getCol(grid: GridType, x: number): PossibilityType[] {
+        return [0,1,2].map(y => grid[y][x]);
+    }
+
+    getLeftDiagnial(grid: GridType): PossibilityType[] {
+        return [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].map(({ x, y }) => grid[y][x]);
+    }
+
+    isOnLeftDiagnial(coordinate: CoordinateType): boolean {
+        return !![{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].find(({ x, y }) =>  x === coordinate.x && y === coordinate.y);
+    }
+
+    isOnRightDiagnial(coordinate: CoordinateType): boolean {
+        return !![{ x: 0, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 0 }].find(({ x, y }) =>  x === coordinate.x && y === coordinate.y);
+    }
+
+    getRightDiagnial(grid: GridType): PossibilityType[] {
+        return [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }].map(({ x, y }) => grid[y][x]);
     }
 
     tallyScore(row: PossibilityType[]): number {
@@ -139,4 +169,4 @@ class TicTacToe extends Rules {
 }
 
 
-export default TicTacToe;
+export default Game;
