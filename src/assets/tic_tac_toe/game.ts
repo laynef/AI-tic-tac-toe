@@ -119,7 +119,18 @@ class TicTacToe extends Rules {
     }
 
     tallyWinningPossibilities(coordinate: CoordinateType): number {
+        let grid = this.grid.get();
 
+        let score = 0;
+        let top_left_diagnial = [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }]
+        let top_right_diagnial = [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }]
+
+        if (!grid[coordinate.y].find(x => grid[coordinate.y][x] === PossibilityType.Player)) score += 1;
+        if (![0, 1, 2].find(y => grid[y][coordinate.x] === PossibilityType.Player)) score += 1;
+        if (top_left_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_left_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += 1;
+        if (top_right_diagnial.find(({ x, y }) =>  x === coordinate.x && y === coordinate.y) && !top_right_diagnial.find(({ x, y }) => PossibilityType.Player === grid[y][x])) score += 1;
+
+        return score;
     }
 
     beatableMove(): CoordinateType {
