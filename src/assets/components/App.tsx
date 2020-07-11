@@ -58,7 +58,7 @@ const App: React.FC = () => {
   return (
     <div className="w-100 h-100">
       {showLandingPage && <LandingPage startNewGame={startNewGame} />}
-      {showGamePlay && <GamePlay gameBoard={gameboard} setGameOver={setGameOver} playersMove={playersMove} />}
+      {showGamePlay && <GamePlay gameBoard={gameboard} playersMove={playersMove} />}
       {showLeaderboard && <GameOver gameOverMessage={gameOverMessage} playAgain={playAgain} />}
     </div>
   );
