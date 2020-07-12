@@ -4,66 +4,50 @@ import { CoordinateType, PlayerType } from './types';
 
 class Player {
 
-    maxDepth?: number;
-    nodesMap: any;
-
-	constructor(maxDepth = -1) {
-        this.maxDepth = maxDepth;
-        this.nodesMap = new Map();
-    }
-
     getBestMove(grid: Grid): CoordinateType {
-	const possibilities = grid.getPossibilities();
+		const possibilities = grid.allPossibilities();
+		let bestScore = null;
+		let results = possibilities[0];
 
-	return possibilities.reduce((acc, coord) => {
-	    const copy_grid = new Grid(grid.grid.slice());
-	    const score = this.minimax(copy_grid, 9 - possibilities.length, true);
+		for (let i = 0; i < possibilities.length; i++) {
+			const coord = possibilities[0];
+			const copy_grid = new Grid(grid.grid.slice());
+			const score = this.minimax(copy_grid, 9 - possibilities.length, true);
 
-	    if (acc.score === null || score > acc.score) {
-	        acc.coordinate = coord;
-                acc.score = score;
-	    }
-	    
-	    return acc;
-	}, { score: null, coordinate: { x: 0, y: 0 } }).coordinate;
+			if (bestScore === null || score > bestScore) {
+				results = coord;
+				bestScore = score;
+			}
+		}
+
+		return results;
     }
 
-    private minimax(grid: Grid, depth: number, isMaxPlayer: boolean): CoordinateType {
-	if (grid.isTerminal()) {
-	    return findScore(grid);
-	}
+    private minimax(grid: Grid, depth: number, isMaxPlayer: boolean): number {
+		if (grid.isTerminal()) {
+			return this.findScore(grid);
+		}
 
-	let bestVal;
-	let possibilities = grid.getPossibilities();
+		const player = isMaxPlayer ? PlayerType.Computer : PlayerType.Player;
+		const math = (...args: any[]) => isMaxPlayer ? Math.max(...args) : Math.min(...args);
+		const possibilities = grid.allPossibilities();
+		let bestVal = isMaxPlayer ? -1000 : 1000;
 
-	if (isMaxPlayer) {
-	   bestVal = -1000;
-	   
-	   for (let i = 0; i < possibilities.length; i++) {
-	        let coord = possibilities[i];
-		grid.set(coord.x, coord.y, PlayerType.Computer);
-	        bestVal = Math.max(bestVal, this.minimax(board, depth+1, !isMaxPlayer));
-		grid.set(coord.x, coord.y, PlayerType.Empty);
-	   }
-	} else {
-	   bestVal = 1000;
+		for (let i = 0; i < possibilities.length; i++) {
+			const { x, y } = possibilities[i];
+			grid.set(x, y, player);
+			bestVal = math(bestVal, this.minimax(grid, depth + 1, !isMaxPlayer));
+			grid.set(x, y, PlayerType.Empty);
+		}
 
-           for (let i = 0; i < possibilities.length; i++) {
-                let coord = possibilities[i];
-                grid.set(coord.x, coord.y, PlayerType.Computer);
-                bestVal = Math.min(bestVal, this.minimax(board, depth+1, !isMaxPlayer));
-		grid.set(coord.x, coord.y, PlayerType.Empty);
-           }
-	}  
-
-	return bestVal;      
+		return bestVal;      
     }
 
-    private findScore(grid: Grid) {
-	if (grid.isWinner(PlayerType.Player)) return -10;
-	else if (grid.isWinner(PlayerType.Computer)) return 10;
+    private findScore(grid: Grid): number {
+		if (grid.isWinner(PlayerType.Player)) return -10;
+		else if (grid.isWinner(PlayerType.Computer)) return 10;
 
-	return 0;
+		return 0;
     }
 
 }

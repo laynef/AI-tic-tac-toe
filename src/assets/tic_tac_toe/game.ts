@@ -46,7 +46,7 @@ class Game {
 
     private unbeatableMove(): CoordinateType {
         const p = new Player();
-        return p.getBestMove();
+        return p.getBestMove(this.grid);
     }
 
     private beatableMove(): CoordinateType {
