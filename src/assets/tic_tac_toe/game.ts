@@ -17,11 +17,7 @@ class Game {
     }
 
     move(x?: number, y?: number) {
-        console.log('First: ', this.grid)
-
         if (this.grid.isTerminal()) return;
-
-        console.log('Second: ', this.grid)
 
         if (this.player === PlayerType.Computer) {
             let coord;
@@ -30,13 +26,9 @@ class Game {
             x = coord.x; y = coord.y;
         }
 
-        console.log('Third: ', this.grid)
-
         if (typeof x === 'number' && typeof y === 'number') {
             this.grid.set(x, y, this.player);
         }
-
-        console.log('Fourth: ', this.grid)
 
         if (this.grid.isWinner(this.player)) {
             this.isWinner = true;
@@ -47,7 +39,6 @@ class Game {
             this.switchPlayer();
         }
 
-        console.log('Final: ', this.grid)
     }
 
     printWinner(): string {
