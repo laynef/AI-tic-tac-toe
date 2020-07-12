@@ -25,7 +25,8 @@ class Game {
         }
 
         if (typeof x === 'number' && typeof y === 'number') {
-            this.grid.set(x, y, this.player);
+            const piece = this.player === PlayerType.Computer ? PlayerType.Computer : PlayerType.Player;
+            this.grid.set(x, y, piece);
         }
 
         if (this.hasWinner()) {
