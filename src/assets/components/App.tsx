@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Game from '../tic_tac_toe/game';
-import { DifficultyType } from '../tic_tac_toe/types';
+import { DifficultyType, PlayerType } from '../tic_tac_toe/types';
 import GamePlay from './GamePlay';
 import LandingPage from './LandingPage';
 import GameOver from './GameOver';
@@ -9,7 +9,7 @@ import GameOver from './GameOver';
 const App: React.FC = () => {
   const [game, setGame]: [any, (state: any) => void] = React.useState(null);
   const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(null);
-
+  const [playersTurn, setPlayersTurn] = React.useState(0);
   const [showLandingPage, setLandingPage] = React.useState(true);
   const [showGamePlay, setGamePlay] = React.useState(false);
   const [showLeaderboard, setLeaderBoard] = React.useState(false);
@@ -20,7 +20,7 @@ const App: React.FC = () => {
     setGame(ticTacToe);
     setLandingPage(false);
     setGamePlay(true);
-    setGameBoard(ticTacToe.grid.grid);
+    setGameBoard(ticTacToe.grid.grid.slice());
   };
 
   const setGameOver = (): void => {
@@ -43,8 +43,10 @@ const App: React.FC = () => {
   }
 
   const playersMove = (x: number, y: number): void => {
-    makeTurn(x, y);
-    makeTurn();
+    if (game.player === PlayerType.Player) {
+      makeTurn(x, y);
+      setPlayersTurn(playersTurn + 1);
+    }
   };
 
   const playAgain = (): void => {
@@ -52,6 +54,12 @@ const App: React.FC = () => {
     setGameOverMessage(null);
     setLandingPage(true);
   };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      makeTurn();
+    }, 500);
+  }, [playersTurn]);
 
   return (
     <div className="w-100 h-100">

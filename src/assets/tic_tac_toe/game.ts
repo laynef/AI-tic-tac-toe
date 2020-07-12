@@ -16,6 +16,7 @@ class Game {
     }
 
     move(x?: number, y?: number) {
+        console.log(this.grid.grid)
         if (this.isWinner || this.grid.movesMade >= 9) return;
 
         if (this.player === PlayerType.Computer) {
@@ -25,8 +26,8 @@ class Game {
         }
 
         if (typeof x === 'number' && typeof y === 'number') {
-            const piece = this.player === PlayerType.Computer ? PlayerType.Computer : PlayerType.Player;
-            this.grid.set(x, y, piece);
+            this.grid.grid[y][x] = this.player;
+            this.grid.movesMade += 1;
         }
 
         if (this.hasWinner()) {
