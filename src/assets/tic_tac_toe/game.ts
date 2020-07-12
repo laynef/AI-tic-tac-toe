@@ -111,14 +111,10 @@ class Game {
         }, []);
 
         if (bestScorePositions.length > 1) {
-            return this.notAnEdge(bestScorePositions);
+            return bestScorePositions.find(({ x, y }) => x === 1 || y === 1) || bestScorePositions[0];
         } else {
             return bestScorePositions[0];
         }
-    }
-
-    private notAnEdge(coordiates: CoordinateType[]): CoordinateType {
-        return coordiates.find(({ x, y }) => x === 1 || y === 1) || { x: 1, y: 1 };
     }
 
     private tallyWinningPossibilities(coordinate: CoordinateType): number {
