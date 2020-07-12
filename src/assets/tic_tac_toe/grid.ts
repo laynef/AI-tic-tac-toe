@@ -1,4 +1,4 @@
-import { GridType } from './types';
+import { GridType, PlayerType } from './types';
 
 
 class Grid {
@@ -6,12 +6,12 @@ class Grid {
     public movesMade: number;
 
     constructor() {
-        this.grid = [[0,0,0],[0,0,0],[0,0,0]];
+        this.grid = [
+            [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty],
+            [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty],
+            [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty]
+        ];
         this.movesMade = 0;
-    }
-
-    public get() {
-        return this.grid;
     }
 
     public set(x: number, y: number, value: number) {

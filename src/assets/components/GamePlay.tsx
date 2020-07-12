@@ -8,8 +8,8 @@ interface GamePlayProps {
 }
 
 const renderPiece = (player: PlayerType): React.ReactNode | null => {
-  if (player === PlayerType.Player) return <p>X</p>;
-  else if (player === PlayerType.Computer) return <p>O</p>;
+  if (player === PlayerType.Player) return <h1 className="text-center">X</h1>;
+  else if (player === PlayerType.Computer) return <h1 className="text-center">O</h1>;
 
   return null;
 }
@@ -26,7 +26,7 @@ const GamePlay: React.FC<GamePlayProps> = ({
             {Array.isArray(gameBoard) && gameBoard.map((row, y) => (
               <tr key={y}>
                 {Array.isArray(row) && row.map((data, x) => (
-                  <td onClick={() => playersMove(x, y)} key={`${y}-${x}`}>
+                  <td className="" onClick={() => data === PlayerType.Empty && playersMove(x, y)} key={`${y}-${x}`}>
                     {renderPiece(data)}
                   </td>
                 ))}

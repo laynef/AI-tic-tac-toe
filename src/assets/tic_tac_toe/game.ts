@@ -102,17 +102,24 @@ class Game {
         const possibilities = this.allPossibilities();
         const allScores = possibilities.map(coord => this.tallyWinningPossibilities(coord));
         const maxScore = Math.max(...allScores);
-        
-        for (let i = 0; i < allScores.length; i++) {
-            if (maxScore === allScores[i]) return possibilities[i];
-        }
 
-        return possibilities[0];
+        const bestScorePositions: CoordinateType[] = allScores.reduce((arr: CoordinateType[], score, i) => {
+            if (maxScore === score) arr.push(possibilities[i]);
+            return arr;
+        }, []);
+
+        if (bestScorePositions.length > 1) {
+            return this.notAnEdge(bestScorePositions);
+        } else {
+            return bestScorePositions[0];
+        }
+    }
+
+    private notAnEdge(coordiates: CoordinateType[]): CoordinateType {
+        return coordiates.find(({ x, y }) => x === 1 || y === 1) || { x: 1, y: 1 };
     }
 
     private tallyWinningPossibilities(coordinate: CoordinateType): number {
-        let grid: GridType = this.grid.grid;
-
         let score = 0;
         let tld = this.getLeftDiagnial();
         let trd = this.getRightDiagnial();
