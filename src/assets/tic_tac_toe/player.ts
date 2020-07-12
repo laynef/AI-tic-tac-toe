@@ -6,39 +6,39 @@ class Player {
 
     getBestMove(grid: Grid): CoordinateType {
 		const possibilities = grid.allPossibilities();
-		let bestScore = null;
-		let results = possibilities[0];
 
-		for (let i = 0; i < possibilities.length; i++) {
-			const coord = possibilities[0];
-			const copy_grid = new Grid(grid.grid.slice());
-			const score = this.minimax(copy_grid, 9 - possibilities.length, true);
+		const scores = possibilities.map(({ x, y }) => {
+			const newGame = new Grid(grid.grid.slice());
+			newGame.set(x, y, PlayerType.Computer);
+			return this.minimax(newGame, false);
+		});
 
-			if (bestScore === null || score > bestScore) {
-				results = coord;
-				bestScore = score;
+		const { index } = scores.reduce((acc, score, i) => {
+			if (acc.score < score) {
+				acc.score = score;
+				acc.index = i;
 			}
-		}
 
-		return results;
+			return acc;
+		}, { index: 0, score: -Infinity });
+
+		return possibilities[index];
     }
 
-    private minimax(grid: Grid, depth: number, isMaxPlayer: boolean): number {
-		if (grid.isTerminal()) {
-			return this.findScore(grid);
+    private minimax(board: Grid, isCom: boolean): number {
+		if (board.isTerminal()) {
+			return this.findScore(board);
 		}
 
-		const player = isMaxPlayer ? PlayerType.Computer : PlayerType.Player;
-		const math = (...args: any[]) => isMaxPlayer ? Math.max(...args) : Math.min(...args);
-		const possibilities = grid.allPossibilities();
-		let bestVal = isMaxPlayer ? -1000 : 1000;
+		const player = isCom ? PlayerType.Computer : PlayerType.Player;
+		const possibilities = board.allPossibilities();
+		let bestVal = isCom ? -1000 : 1000;
 
-		for (let i = 0; i < possibilities.length; i++) {
-			const { x, y } = possibilities[i];
-			grid.set(x, y, player);
-			bestVal = math(bestVal, this.minimax(grid, depth + 1, !isMaxPlayer));
-			grid.set(x, y, PlayerType.Empty);
-		}
+		possibilities.forEach(({ x, y }) => {
+			const newGame = new Grid(board.grid.slice());
+			newGame.set(x, y, player);
+			bestVal = this.minimax(newGame, !isCom);
+		});
 
 		return bestVal;      
     }

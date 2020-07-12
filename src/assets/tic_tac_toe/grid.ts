@@ -7,9 +7,9 @@ class Grid {
 
     constructor(grid?: GridType) {
         this.grid = grid || [
-            [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty],
-            [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty],
-            [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty]
+            [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty],
+            [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty],
+            [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty]
         ];
         this.movesMade = 0;
     }

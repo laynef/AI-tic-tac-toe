@@ -26,8 +26,7 @@ class Game {
         }
 
         if (typeof x === 'number' && typeof y === 'number') {
-            this.grid.grid[y][x] = this.player;
-            this.grid.movesMade += 1;
+            this.grid.set(x, y, this.player);
         }
 
         if (this.grid.isWinner(this.player)) {
@@ -46,7 +45,8 @@ class Game {
 
     private unbeatableMove(): CoordinateType {
         const p = new Player();
-        return p.getBestMove(this.grid);
+        console.log('HIT', this.grid.grid)
+        return p.getBestMove(new Grid(this.grid.grid.slice()));
     }
 
     private beatableMove(): CoordinateType {
