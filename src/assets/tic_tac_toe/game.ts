@@ -48,7 +48,7 @@ class Game {
         // It is not performant to check every move to be unstoppable
         let comWin = this.canComputerWin();
         let blockHuman = this.canHumanWin();
-
+        console.log(comWin, blockHuman)
         if (comWin) return comWin;
         else if (blockHuman) return blockHuman;
 
@@ -63,16 +63,16 @@ class Game {
         } else if (grid[0][0] === player && grid[1][1] === PlayerType.Empty && grid[2][2] === player) {
             return { x: 1, y: 1 };
         } else if (grid[0][0] === player && grid[1][1] === player && grid[2][2] === PlayerType.Empty) {
-            return { x: 0, y: 0 };
-        } else if (grid[0][2] === PlayerType.Empty && grid[1][1] === player && grid[0][2] === player) {
+            return { x: 2, y: 2 };
+        } else if (grid[0][2] === PlayerType.Empty && grid[1][1] === player && grid[2][0] === player) {
             return { x: 2, y: 0 };
-        } else if (grid[0][2] === player && grid[1][1] === PlayerType.Empty && grid[0][2] === player) {
+        } else if (grid[0][2] === player && grid[1][1] === PlayerType.Empty && grid[2][0] === player) {
             return { x: 1, y: 1 };
         } else if (grid[0][2] === player && grid[1][1] === player && grid[2][0] === PlayerType.Empty) {
             return { x: 0, y: 2 };
         }
 
-        for (let i = 0; i < grid.length; i++) {
+        for (let i = 0; i < 3; i++) {
             let row: PlayerType[] = grid[i];
 
             if (row[0] === player && row[1] === player && row[2] === PlayerType.Empty) {
@@ -123,16 +123,12 @@ class Game {
         let row = this.getRow(coordinate.y);
         let col = this.getCol(coordinate.x);
 
-        if (!this.hasPlayer(row)) score += this.tallyScore(row);
-        if (!this.hasPlayer(col)) score += this.tallyScore(col);
-        if (this.isOnLeftDiagnial(coordinate) && !this.hasPlayer(tld)) score += this.tallyScore(tld);
-        if (this.isOnRightDiagnial(coordinate) && !this.hasPlayer(trd)) score += this.tallyScore(trd);
+        score += this.tallyScore(row);
+        score += this.tallyScore(col);
+        if (this.isOnLeftDiagnial(coordinate)) score += this.tallyScore(tld);
+        if (this.isOnRightDiagnial(coordinate)) score += this.tallyScore(trd);
 
         return score;
-    }
-
-    private hasPlayer(row: PlayerType[]): boolean {
-        return !!row.find(e => e === PlayerType.Player);
     }
 
     private getRow(y: number): PlayerType[] {
@@ -147,6 +143,10 @@ class Game {
         return [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].map(({ x, y }) => this.grid.grid[y][x]);
     }
 
+    private getRightDiagnial(): PlayerType[] {
+        return [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }].map(({ x, y }) => this.grid.grid[y][x]);
+    }
+
     private isOnLeftDiagnial(coordinate: CoordinateType): boolean {
         return !![{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }].find(({ x, y }) =>  x === coordinate.x && y === coordinate.y);
     }
@@ -155,12 +155,10 @@ class Game {
         return !![{ x: 0, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 0 }].find(({ x, y }) =>  x === coordinate.x && y === coordinate.y);
     }
 
-    private getRightDiagnial(): PlayerType[] {
-        return [{ x: 2, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 2 }].map(({ x, y }) => this.grid.grid[y][x]);
-    }
-
     private tallyScore(row: PlayerType[]): number {
-        return row.reduce((acc, item) => acc + (item === PlayerType.Computer ? 1 : 0), 1);
+        if (row.every(e => e === PlayerType.Empty)) return 6;
+        else if (row.find(e => e === PlayerType.Player)) return -1;
+        return row.reduce((acc, e) => acc + (e === PlayerType.Computer ? 1 : 0), 1);
     }
 
     private beatableMove(): CoordinateType {
