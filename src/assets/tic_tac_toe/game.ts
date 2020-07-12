@@ -16,7 +16,6 @@ class Game {
     }
 
     move(x?: number, y?: number) {
-        console.log(this.grid.grid)
         if (this.isWinner || this.grid.movesMade >= 9) return;
 
         if (this.player === PlayerType.Computer) {
