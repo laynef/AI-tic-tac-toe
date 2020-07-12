@@ -4,25 +4,27 @@ import { CoordinateType, PlayerType } from './types';
 
 class Player {
 
-    getBestMove(grid: Grid): CoordinateType {
-		const possibilities = grid.allPossibilities();
+	grid: Grid;
 
-		const scores = possibilities.map(({ x, y }) => {
-			const newGame = new Grid(grid.grid.slice());
-			newGame.set(x, y, PlayerType.Computer);
-			return this.minimax(newGame, false);
-		});
+	constructor(grid: Grid) {
+		this.grid = grid;
+	}
 
-		const { index } = scores.reduce((acc, score, i) => {
-			if (acc.score < score) {
+    getBestMove(): CoordinateType {
+		const possibilities = this.grid.allPossibilities();
+
+		return possibilities.reduce((acc, { x, y }) => {
+			this.grid.set(x, y, PlayerType.Computer);
+			const score = this.minimax(this.grid, false);
+			this.grid.clear(x, y, PlayerType.Empty);
+
+			if (score > acc.score) {
+				acc.coordinate = { x, y };
 				acc.score = score;
-				acc.index = i;
 			}
 
 			return acc;
-		}, { index: 0, score: -Infinity });
-
-		return possibilities[index];
+		}, { score: -Infinity, coordinate: { x: 0, y: 0 } }).coordinate;
     }
 
     private minimax(board: Grid, isCom: boolean): number {
@@ -32,20 +34,24 @@ class Player {
 
 		const player = isCom ? PlayerType.Computer : PlayerType.Player;
 		const possibilities = board.allPossibilities();
-		let bestVal = isCom ? -1000 : 1000;
+		let bestVal = isCom ? -Infinity : Infinity;
 
-		possibilities.forEach(({ x, y }) => {
-			const newGame = new Grid(board.grid.slice());
-			newGame.set(x, y, player);
-			bestVal = this.minimax(newGame, !isCom);
-		});
+		for (let i = 0; i < possibilities.length; i++) {
+			const { x, y } = possibilities[i];
+
+			board.set(x, y, player);
+			const score = this.minimax(board, !isCom);
+			board.clear(x, y, PlayerType.Empty);
+
+			bestVal = isCom ? Math.max(score, bestVal) : Math.min(score, bestVal);
+		}
 
 		return bestVal;      
     }
 
-    private findScore(grid: Grid): number {
-		if (grid.isWinner(PlayerType.Player)) return -10;
-		else if (grid.isWinner(PlayerType.Computer)) return 10;
+    private findScore(board: Grid): number {
+		if (board.isWinner(PlayerType.Player)) return -10;
+		else if (board.isWinner(PlayerType.Computer)) return 10;
 
 		return 0;
     }

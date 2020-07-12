@@ -45,6 +45,11 @@ class Grid {
         this.movesMade += 1;
     }
 
+    clear(x: number, y: number, value: number): void {
+        this.grid[y][x] = value;
+        this.movesMade -= 1;
+    }
+
     private checkRow(row: PlayerType[], player: PlayerType): boolean {
         return row[0] === player &&
             row[1] === player &&

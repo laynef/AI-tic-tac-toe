@@ -17,17 +17,26 @@ class Game {
     }
 
     move(x?: number, y?: number) {
+        console.log('First: ', this.grid)
+
         if (this.grid.isTerminal()) return;
 
+        console.log('Second: ', this.grid)
+
         if (this.player === PlayerType.Computer) {
-            const difficulty = this.difficulty === DifficultyType.Unbeatable ? () => this.unbeatableMove() : () => this.beatableMove();
-            let coord: CoordinateType = difficulty();
+            let coord;
+            if (this.difficulty === DifficultyType.Unbeatable) coord = this.unbeatableMove();
+            else coord = this.beatableMove();
             x = coord.x; y = coord.y;
         }
+
+        console.log('Third: ', this.grid)
 
         if (typeof x === 'number' && typeof y === 'number') {
             this.grid.set(x, y, this.player);
         }
+
+        console.log('Fourth: ', this.grid)
 
         if (this.grid.isWinner(this.player)) {
             this.isWinner = true;
@@ -37,6 +46,8 @@ class Game {
         } else if (typeof x === 'number' && typeof y === 'number') {
             this.switchPlayer();
         }
+
+        console.log('Final: ', this.grid)
     }
 
     printWinner(): string {
@@ -44,9 +55,8 @@ class Game {
     }
 
     private unbeatableMove(): CoordinateType {
-        const p = new Player();
-        console.log('HIT', this.grid.grid)
-        return p.getBestMove(new Grid(this.grid.grid.slice()));
+        const p = new Player(this.grid);
+        return p.getBestMove();
     }
 
     private beatableMove(): CoordinateType {
