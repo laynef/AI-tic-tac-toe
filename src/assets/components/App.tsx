@@ -58,7 +58,7 @@ const App: React.FC = () => {
   React.useEffect(() => {
     setTimeout(() => {
       makeTurn();
-    }, 500);
+    }, 300);
   }, [playersTurn]);
 
   return (
