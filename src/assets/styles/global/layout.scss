@@ -8,6 +8,16 @@ html,
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.root,
+.app {
   width: 100vw;
   height: 100vh;
+}
+
+@media (max-width: 500px) {
+  .app {
+    height: auto !important;
+  }
 }

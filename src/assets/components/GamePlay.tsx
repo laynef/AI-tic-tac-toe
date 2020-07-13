@@ -19,7 +19,7 @@ const GamePlay: React.FC<GamePlayProps> = ({ playersMove, gameBoard }) => {
       id="GamePlay"
       className="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center"
     >
-      <div className="w-75 h-75 bg-white d-flex flex-column round-card card shadow">
+      <div className="h-75 w-75 bg-white d-flex flex-column round-card card shadow">
         <table>
           <tbody>
             {Array.isArray(gameBoard) &&

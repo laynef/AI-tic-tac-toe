@@ -11,10 +11,6 @@ import GameOver from './GameOver';
 
 const Application: React.FC = () => {
   const [game, setGame]: [any, (state: any) => void] = React.useState(null);
-  const [winningArray, setWinningArray]: [
-    any,
-    (state: any) => void
-  ] = React.useState([]);
   const [winner, setWinner]: [any, (state: any) => void] = React.useState(null);
   const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(
     null
@@ -22,7 +18,7 @@ const Application: React.FC = () => {
   const [playersTurn, setPlayersTurn] = React.useState(0);
   const [showLandingPage, setLandingPage] = React.useState(true);
   const [showGamePlay, setGamePlay] = React.useState(false);
-  const [showLeaderboard, setLeaderBoard] = React.useState(false);
+  const [showGameOver, setGameOverPage] = React.useState(false);
   const [gameOverMessage, setGameOverMessage] = React.useState(null);
 
   const startNewGame = (difficulty: DifficultyType): void => {
@@ -35,7 +31,7 @@ const Application: React.FC = () => {
 
   const setGameOver = (): void => {
     setGamePlay(false);
-    setLeaderBoard(true);
+    setGameOverPage(true);
   };
 
   const makeTurn = (x?: number, y?: number): void => {
@@ -65,7 +61,6 @@ const Application: React.FC = () => {
       const time = winLen === 3 ? 1000 : 800;
       setTimeout(() => {
         setGameOver();
-        setWinningArray([]);
       }, time);
     }
   };
@@ -78,7 +73,7 @@ const Application: React.FC = () => {
   };
 
   const playAgain = (): void => {
-    setLeaderBoard(false);
+    setGameOverPage(false);
     setGameOverMessage(null);
     setLandingPage(true);
   };
@@ -90,12 +85,19 @@ const Application: React.FC = () => {
   }, [playersTurn]);
 
   return (
-    <div id="Application" className="w-100 h-100">
+    <div
+      id="Application"
+      className={`${
+        showGamePlay || (showGameOver && gameOverMessage === 'Tie!')
+          ? 'root'
+          : 'app'
+      }`}
+    >
       {showLandingPage && <LandingPage startNewGame={startNewGame} />}
       {showGamePlay && (
         <GamePlay gameBoard={gameboard} playersMove={playersMove} />
       )}
-      {showLeaderboard && (
+      {showGameOver && (
         <GameOver
           winner={winner}
           gameOverMessage={gameOverMessage}
