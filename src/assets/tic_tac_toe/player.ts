@@ -16,7 +16,7 @@ class Player {
 		return possibilities.reduce((acc, { x, y }) => {
 			this.grid.set(x, y, PlayerType.Computer);
 			const score = this.minimax(this.grid, false);
-			this.grid.clear(x, y, PlayerType.Empty);
+			this.grid.clear(x, y);
 
 			if (score > acc.score) {
 				acc.coordinate = { x, y };
@@ -41,7 +41,7 @@ class Player {
 
 			board.set(x, y, player);
 			const score = this.minimax(board, !isCom);
-			board.clear(x, y, PlayerType.Empty);
+			board.clear(x, y);
 
 			bestVal = isCom ? Math.max(score, bestVal) : Math.min(score, bestVal);
 		}

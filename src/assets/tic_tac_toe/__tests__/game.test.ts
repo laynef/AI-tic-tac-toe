@@ -2,7 +2,9 @@ import { DifficultyType } from '../types';
 import Game from '../game';
 
 
-it('render without crashing', () => {
-    expect(new Game(DifficultyType.Unbeatable)).toBeTruthy();
-    expect(new Game(DifficultyType.Beatable)).toBeTruthy();
+it('call Game without errors', () => {
+    const unbeatable = new Game(DifficultyType.Unbeatable);
+    const beatable = new Game(DifficultyType.Beatable);
+    expect(unbeatable).toBeInstanceOf(Game);
+    expect(beatable).toBeInstanceOf(Game);
 });

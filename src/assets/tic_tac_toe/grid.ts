@@ -45,8 +45,8 @@ class Grid {
         this.movesMade += 1;
     }
 
-    clear(x: number, y: number, value: number): void {
-        this.grid[y][x] = value;
+    clear(x: number, y: number): void {
+        this.grid[y][x] = PlayerType.Empty;
         this.movesMade -= 1;
     }
 

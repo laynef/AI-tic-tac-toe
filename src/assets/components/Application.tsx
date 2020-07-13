@@ -62,7 +62,7 @@ const Application: React.FC = () => {
   }, [playersTurn]);
 
   return (
-    <div className="w-100 h-100">
+    <div id="Application" className="w-100 h-100">
       {showLandingPage && <LandingPage startNewGame={startNewGame} />}
       {showGamePlay && <GamePlay gameBoard={gameboard} playersMove={playersMove} />}
       {showLeaderboard && <GameOver gameOverMessage={gameOverMessage} playAgain={playAgain} />}
