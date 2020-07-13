@@ -54,7 +54,12 @@ const Application: React.FC = () => {
         div.className = 'foo';
 
         const id = document.getElementById(`${e.y}-${e.x}`) || div;
-        const winClass = winLen === 3 ? 'text-win' : 'text-tie';
+        const winClass =
+          winLen !== 3
+            ? 'text-tie'
+            : game.player === PlayerType.Player
+            ? 'text-win'
+            : 'text-lose';
         id.classList.add(winClass);
       });
 
