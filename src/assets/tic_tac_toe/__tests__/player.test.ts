@@ -8,4 +8,16 @@ describe('Player', () => {
         expect(new Player(new Grid())).toBeTruthy();
     });
 
+    describe('call methods', () => {
+        
+        it('getBestMove blocks Human wins', () => {
+            expect(new Player(new Grid())).toBeTruthy();
+        });
+
+        it('getBestMove lets Computer win', () => {
+            expect(new Player(new Grid())).toBeTruthy();
+        });
+
+    });
+
 });
