@@ -7,10 +7,8 @@ interface GamePlayProps {
 }
 
 const renderPiece = (player: PlayerType): React.ReactNode | null => {
-  if (player === PlayerType.Player)
-    return <h1 className="text-center text-muted markers">X</h1>;
-  else if (player === PlayerType.Computer)
-    return <h1 className="text-center text-muted markers">O</h1>;
+  if (player === PlayerType.Player) return 'X';
+  else if (player === PlayerType.Computer) return 'O';
 
   return null;
 };
@@ -34,6 +32,8 @@ const GamePlay: React.FC<GamePlayProps> = ({ playersMove, gameBoard }) => {
                           data === PlayerType.Empty && playersMove(x, y)
                         }
                         key={`${y}-${x}`}
+                        id={`${y}-${x}`}
+                        className="text-center text-muted markers h1"
                       >
                         {renderPiece(data)}
                       </td>

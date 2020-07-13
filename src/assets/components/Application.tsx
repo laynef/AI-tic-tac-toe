@@ -1,12 +1,20 @@
 import * as React from 'react';
 import Game from '../tic_tac_toe/game';
-import { DifficultyType, PlayerType } from '../tic_tac_toe/types';
+import {
+  DifficultyType,
+  PlayerType,
+  CoordinateType,
+} from '../tic_tac_toe/types';
 import GamePlay from './GamePlay';
 import LandingPage from './LandingPage';
 import GameOver from './GameOver';
 
 const Application: React.FC = () => {
   const [game, setGame]: [any, (state: any) => void] = React.useState(null);
+  const [winningArray, setWinningArray]: [
+    any,
+    (state: any) => void
+  ] = React.useState([]);
   const [winner, setWinner]: [any, (state: any) => void] = React.useState(null);
   const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(
     null
@@ -41,7 +49,22 @@ const Application: React.FC = () => {
     if (game && game.isWinner) {
       setGameOverMessage(game.printWinner());
       setWinner(game.player);
-      setGameOver();
+
+      const winArr = game.grid.getWinningArray(game.player);
+
+      winArr.forEach((e: CoordinateType) => {
+        const div = document.createElement('div');
+        div.className = 'foo';
+
+        const id = document.getElementById(`${e.y}-${e.x}`) || div;
+        id.classList.add('text-win');
+      });
+
+      const time = 800;
+      setTimeout(() => {
+        setGameOver();
+        setWinningArray([]);
+      }, time);
     }
   };
 

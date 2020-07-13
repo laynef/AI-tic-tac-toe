@@ -38,6 +38,11 @@ describe('Grid', () => {
     it('Check winner and terminal methods', () => {
       expect(initialize.isTerminal()).toEqual(true);
       expect(initialize.isWinner(PlayerType.Player)).toEqual(true);
+      expect(initialize.getWinningArray(PlayerType.Player)).toEqual([
+        { x: 0, y: 0 },
+        { x: 1, y: 1 },
+        { x: 2, y: 2 },
+      ]);
     });
 
     it('Clear moves and check valid number available spaces', () => {

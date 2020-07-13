@@ -43,6 +43,10 @@ tr:nth-of-type(3) td {
   border-bottom-color: transparent;
 }
 
+.text-win {
+  color: cyan !important;
+}
+
 @media (max-width: 478px) {
   #Application > #GameOver,
   #Application > #LandingPage,
