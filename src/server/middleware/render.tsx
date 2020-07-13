@@ -12,7 +12,7 @@ const renderMiddleware = () => (req: Request, res: Response) => {
     HTML_CONTENT: htmlContent,
   };
 
-  Object.keys(htmlReplacements).forEach(key => {
+  Object.keys(htmlReplacements).forEach((key) => {
     const value = htmlReplacements[key];
     html = html.replace(
       new RegExp('__' + escapeStringRegexp(key) + '__', 'g'),
