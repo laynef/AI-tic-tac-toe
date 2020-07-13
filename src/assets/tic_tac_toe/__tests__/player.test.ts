@@ -1,7 +1,10 @@
 import Player from '../player';
 import Grid from '../grid';
 
+describe('Player', () => {
 
-it('render without crashing', () => {
-    expect(new Player(new Grid())).toBeTruthy();
+    it('call without crashing', () => {
+        expect(new Player(new Grid())).toBeTruthy();
+    });
+
 });
