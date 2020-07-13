@@ -1,3 +1,9 @@
+$green: #26dbb0;
+$red: #d95a4e;
+$orange: #ed6f27;
+$yellow: #ffc75a;
+$grey: #6c757d;
+
 table {
   width: 100%;
   height: 100%;
@@ -11,11 +17,11 @@ td {
 }
 
 td {
-  border: 6px solid #6c757d;
+  border: 6px solid $grey;
 }
 
 td {
-  border: 6px solid #6c757d;
+  border: 6px solid $grey;
 }
 
 @media (max-width: 768px) {
@@ -44,15 +50,15 @@ tr:nth-of-type(3) td {
 }
 
 .text-win {
-  color: #26dbb0 !important;
+  color: $green !important;
 }
 
 .text-lose {
-  color: #ff4162 !important;
+  color: $orange !important;
 }
 
 .text-tie {
-  color: #ed6f27 !important;
+  color: $yellow !important;
 }
 
 .round-card {
