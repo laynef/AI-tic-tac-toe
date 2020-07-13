@@ -24,6 +24,7 @@
   },
   "scripts": {
     "start": "node build",
+    "dev": "react-ssr-scripts start",
     "build": "react-ssr-scripts build",
     "test": "react-ssr-scripts test",
     "eject": "react-ssr-scripts eject"

@@ -26,9 +26,9 @@ const GameOver: React.FC<GameOverProps> = ({
   return (
     <div
       id="GameOver"
-      className="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center"
+      className="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center h-fit-content"
     >
-      <div className="w-75 h-75 bg-white d-flex flex-column card align-items-center round-card justify-content-between shadow">
+      <div className="w-75 h-75 bg-white d-flex flex-column card align-items-center round-card justify-content-between shadow h-fit-content">
         <h1
           style={{ fontSize: '3.5rem' }}
           className="text-muted text-center font-weight-light mt-5 mb-5"
@@ -41,7 +41,7 @@ const GameOver: React.FC<GameOverProps> = ({
           </h2>
         )}
         {winner !== null && renderImage(winner)}
-        <div className="w-100 d-flex flex-row justify-content-around mt-5 mb-5">
+        <div className="w-100 d-flex flex-column flex-lg-row justify-content-around mt-5 mb-5">
           <button
             className="btn btn-outline-secondary"
             onClick={() => playAgain()}

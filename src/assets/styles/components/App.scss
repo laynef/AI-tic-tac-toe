@@ -4,14 +4,25 @@ table {
   border-collapse: collapse;
 }
 
+tr,
 td {
   width: 33.333%;
   height: 33.333%;
+}
+
+td {
   border: 6px solid #6c757d;
 }
 
 td {
   border: 6px solid #6c757d;
+}
+
+@media (max-width: 540px) {
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 td:first-of-type {
@@ -42,31 +53,29 @@ tr:nth-of-type(3) td {
   }
 }
 
+@media (max-width: 540px) {
+  .h-fit-content {
+    height: fit-content !important;
+  }
+}
+
 .round-card {
   border-radius: 16px !important;
 }
 
+#Application,
 .bg-light {
   background-color: #f8f5f0 !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (max-width: 540px) {
+  .markers {
+    font-size: 5rem;
   }
 }
 
-.button-color {
-  color: #61dbfb !important;
-  border-color: #61dbfb !important;
-}
-
-.button-color:hover,
-.button-color:active {
-  color: #ffffff !important;
-  border-color: #61dbfb !important;
-  background-color: #61dbfb !important;
+@media (min-width: 541px) {
+  .markers {
+    font-size: 8rem;
+  }
 }
