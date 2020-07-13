@@ -1,5 +1,6 @@
 This project was bootstrapped with [Create React SSR App](https://github.com/trustworktech/create-react-ssr-app).
 
+
 ## Available Scripts
 
 In the project directory, you can run:
