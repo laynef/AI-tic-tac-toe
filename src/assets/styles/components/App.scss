@@ -7,11 +7,11 @@ table {
 td {
   width: 33.333%;
   height: 33.333%;
-  border: 6px solid #222;
+  border: 6px solid #6c757d;
 }
 
 td {
-  border: 6px solid #222;
+  border: 6px solid #6c757d;
 }
 
 td:first-of-type {
@@ -42,6 +42,14 @@ tr:nth-of-type(3) td {
   }
 }
 
+.round-card {
+  border-radius: 16px !important;
+}
+
+.bg-light {
+  background-color: #f8f5f0 !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -49,4 +57,16 @@ tr:nth-of-type(3) td {
   to {
     transform: rotate(360deg);
   }
+}
+
+.button-color {
+  color: #61dbfb !important;
+  border-color: #61dbfb !important;
+}
+
+.button-color:hover,
+.button-color:active {
+  color: #ffffff !important;
+  border-color: #61dbfb !important;
+  background-color: #61dbfb !important;
 }

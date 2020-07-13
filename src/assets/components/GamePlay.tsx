@@ -7,9 +7,18 @@ interface GamePlayProps {
 }
 
 const renderPiece = (player: PlayerType): React.ReactNode | null => {
-  if (player === PlayerType.Player) return <h1 className="text-center">X</h1>;
+  if (player === PlayerType.Player)
+    return (
+      <h1 className="text-center" style={{ fontSize: '8rem' }}>
+        X
+      </h1>
+    );
   else if (player === PlayerType.Computer)
-    return <h1 className="text-center">O</h1>;
+    return (
+      <h1 className="text-center" style={{ fontSize: '8rem' }}>
+        O
+      </h1>
+    );
 
   return null;
 };
@@ -18,9 +27,9 @@ const GamePlay: React.FC<GamePlayProps> = ({ playersMove, gameBoard }) => {
   return (
     <div
       id="GamePlay"
-      className="w-100 h-100 bg-dark d-flex flex-column align-items-center justify-content-center"
+      className="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center"
     >
-      <div className="w-75 h-75 bg-light d-flex flex-column card shadow">
+      <div className="w-75 h-75 bg-white d-flex flex-column round-card card shadow">
         <table>
           <tbody>
             {Array.isArray(gameBoard) &&
@@ -29,7 +38,6 @@ const GamePlay: React.FC<GamePlayProps> = ({ playersMove, gameBoard }) => {
                   {Array.isArray(row) &&
                     row.map((data, x) => (
                       <td
-                        className=""
                         onClick={() =>
                           data === PlayerType.Empty && playersMove(x, y)
                         }

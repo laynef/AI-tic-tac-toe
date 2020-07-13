@@ -7,6 +7,7 @@ import GameOver from './GameOver';
 
 const Application: React.FC = () => {
   const [game, setGame]: [any, (state: any) => void] = React.useState(null);
+  const [winner, setWinner]: [any, (state: any) => void] = React.useState(null);
   const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(
     null
   );
@@ -39,6 +40,7 @@ const Application: React.FC = () => {
 
     if (game && game.isWinner) {
       setGameOverMessage(game.printWinner());
+      setWinner(game.player);
       setGameOver();
     }
   };
@@ -69,7 +71,11 @@ const Application: React.FC = () => {
         <GamePlay gameBoard={gameboard} playersMove={playersMove} />
       )}
       {showLeaderboard && (
-        <GameOver gameOverMessage={gameOverMessage} playAgain={playAgain} />
+        <GameOver
+          winner={winner}
+          gameOverMessage={gameOverMessage}
+          playAgain={playAgain}
+        />
       )}
     </div>
   );
