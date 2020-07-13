@@ -1,8 +1,8 @@
 import path from 'path';
 import express from 'express';
 
-import htmlMiddleware from './server/middleware/html';
-import renderMiddleware from './server/middleware/render';
+import htmlMiddleware from './server/html';
+import renderMiddleware from './server/render';
 
 const publicPath = path.join(__dirname, 'public');
 const app = express();
