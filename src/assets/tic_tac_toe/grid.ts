@@ -47,7 +47,7 @@ class Grid {
       else if (Array.isArray(col)) return col;
     }
 
-    return [];
+    return this.allPositions();
   }
 
   isTerminal(): boolean {

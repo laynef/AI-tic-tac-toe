@@ -44,7 +44,11 @@ tr:nth-of-type(3) td {
 }
 
 .text-win {
-  color: cyan !important;
+  color: #17deee !important;
+}
+
+.text-tie {
+  color: #ff4162 !important;
 }
 
 @media (max-width: 478px) {

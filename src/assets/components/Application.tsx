@@ -51,16 +51,18 @@ const Application: React.FC = () => {
       setWinner(game.player);
 
       const winArr = game.grid.getWinningArray(game.player);
+      const winLen = winArr.length;
 
       winArr.forEach((e: CoordinateType) => {
         const div = document.createElement('div');
         div.className = 'foo';
 
         const id = document.getElementById(`${e.y}-${e.x}`) || div;
-        id.classList.add('text-win');
+        const winClass = winLen === 3 ? 'text-win' : 'text-tie';
+        id.classList.add(winClass);
       });
 
-      const time = 800;
+      const time = winLen === 3 ? 1000 : 800;
       setTimeout(() => {
         setGameOver();
         setWinningArray([]);
