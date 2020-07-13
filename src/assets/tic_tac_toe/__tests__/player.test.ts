@@ -1,5 +1,6 @@
 import Player from '../player';
 import Grid from '../grid';
+import { PlayerType } from '../types';
 
 
 describe('Player', () => {
@@ -11,11 +12,23 @@ describe('Player', () => {
     describe('call methods', () => {
         
         it('getBestMove blocks Human wins', () => {
-            expect(new Player(new Grid())).toBeTruthy();
+            const block = new Player(new Grid([
+                [PlayerType.Player, PlayerType.Player, PlayerType.Empty],
+                [PlayerType.Empty, PlayerType.Computer, PlayerType.Empty],
+                [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty]
+            ]));
+
+            expect(block.getBestMove()).toEqual({ x: 2, y: 0 });
         });
 
         it('getBestMove lets Computer win', () => {
-            expect(new Player(new Grid())).toBeTruthy();
+            const win = new Player(new Grid([
+                [PlayerType.Player, PlayerType.Computer, PlayerType.Empty],
+                [PlayerType.Player, PlayerType.Computer, PlayerType.Empty],
+                [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty]
+            ]));
+
+            expect(win.getBestMove()).toEqual({ x: 0, y: 2 });
         });
 
     });
