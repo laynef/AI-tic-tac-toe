@@ -63,7 +63,7 @@ const Application: React.FC = () => {
         id.classList.add(winClass);
       });
 
-      const time = winLen === 3 ? 1000 : 800;
+      const time = winLen === 3 ? 1000 : 300;
       setTimeout(() => {
         setGameOver();
       }, time);
