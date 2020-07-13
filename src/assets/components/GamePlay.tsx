@@ -9,13 +9,13 @@ interface GamePlayProps {
 const renderPiece = (player: PlayerType): React.ReactNode | null => {
   if (player === PlayerType.Player)
     return (
-      <h1 className="text-center" style={{ fontSize: '8rem' }}>
+      <h1 className="text-center text-muted" style={{ fontSize: '8rem' }}>
         X
       </h1>
     );
   else if (player === PlayerType.Computer)
     return (
-      <h1 className="text-center" style={{ fontSize: '8rem' }}>
+      <h1 className="text-center text-muted" style={{ fontSize: '8rem' }}>
         O
       </h1>
     );
