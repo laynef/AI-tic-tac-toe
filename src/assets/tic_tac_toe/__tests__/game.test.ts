@@ -4,11 +4,22 @@ import Game from '../game';
 
 describe('Game', () => {
 
-    it('call without errors', () => {
-        const unbeatable = new Game(DifficultyType.Unbeatable);
-        const beatable = new Game(DifficultyType.Beatable);
-        expect(unbeatable).toBeInstanceOf(Game);
-        expect(beatable).toBeInstanceOf(Game);
-    });
+    describe('Beatable Difficulty', () => {
+
+        it('call without errors', () => {
+            const beatable = new Game(DifficultyType.Beatable);
+            expect(beatable).toBeInstanceOf(Game);
+        });
+
+    })
+
+    describe('Unbeatable Difficulty', () => {
+
+        it('call without errors', () => {
+            const unbeatable = new Game(DifficultyType.Unbeatable);
+            expect(unbeatable).toBeInstanceOf(Game);
+        });
+
+    })
 
 });

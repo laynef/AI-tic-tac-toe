@@ -3,9 +3,9 @@ import Grid from '../grid';;
 
 
 const emptyGrid = [
-    [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty],
-    [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty],
-    [PlayerType.Empty,PlayerType.Empty,PlayerType.Empty]
+    [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty],
+    [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty],
+    [PlayerType.Empty, PlayerType.Empty, PlayerType.Empty]
 ];
 
 describe('Grid', () => {
