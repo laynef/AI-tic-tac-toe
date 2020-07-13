@@ -6,7 +6,7 @@ import LandingPage from './LandingPage';
 import GameOver from './GameOver';
 
 
-const App: React.FC = () => {
+const Application: React.FC = () => {
   const [game, setGame]: [any, (state: any) => void] = React.useState(null);
   const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(null);
   const [playersTurn, setPlayersTurn] = React.useState(0);
@@ -70,4 +70,4 @@ const App: React.FC = () => {
   );
 }
 
-export default App;
+export default Application;
