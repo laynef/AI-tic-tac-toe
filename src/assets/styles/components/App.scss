@@ -1,9 +1,3 @@
-$green: #26dbb0;
-$red: #d95a4e;
-$orange: #ed6f27;
-$yellow: #ffc75a;
-$grey: #6c757d;
-
 table {
   width: 100%;
   height: 100%;
@@ -67,7 +61,7 @@ tr:nth-of-type(3) td {
 
 #Application,
 .bg-light {
-  background-color: #f8f5f0 !important;
+  background-color: $eggshell !important;
 }
 
 @media (max-width: 540px) {
