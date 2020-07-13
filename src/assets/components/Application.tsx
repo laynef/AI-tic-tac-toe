@@ -5,10 +5,11 @@ import GamePlay from './GamePlay';
 import LandingPage from './LandingPage';
 import GameOver from './GameOver';
 
-
 const Application: React.FC = () => {
   const [game, setGame]: [any, (state: any) => void] = React.useState(null);
-  const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(null);
+  const [gameboard, setGameBoard]: [any, (state: any) => void] = React.useState(
+    null
+  );
   const [playersTurn, setPlayersTurn] = React.useState(0);
   const [showLandingPage, setLandingPage] = React.useState(true);
   const [showGamePlay, setGamePlay] = React.useState(false);
@@ -40,7 +41,7 @@ const Application: React.FC = () => {
       setGameOverMessage(game.printWinner());
       setGameOver();
     }
-  }
+  };
 
   const playersMove = (x: number, y: number): void => {
     if (game.player === PlayerType.Player) {
@@ -64,10 +65,14 @@ const Application: React.FC = () => {
   return (
     <div id="Application" className="w-100 h-100">
       {showLandingPage && <LandingPage startNewGame={startNewGame} />}
-      {showGamePlay && <GamePlay gameBoard={gameboard} playersMove={playersMove} />}
-      {showLeaderboard && <GameOver gameOverMessage={gameOverMessage} playAgain={playAgain} />}
+      {showGamePlay && (
+        <GamePlay gameBoard={gameboard} playersMove={playersMove} />
+      )}
+      {showLeaderboard && (
+        <GameOver gameOverMessage={gameOverMessage} playAgain={playAgain} />
+      )}
     </div>
   );
-}
+};
 
 export default Application;
