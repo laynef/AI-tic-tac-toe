@@ -18,7 +18,7 @@ td {
   border: 6px solid #6c757d;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px) {
   img {
     width: 100%;
     height: auto;
@@ -43,17 +43,9 @@ tr:nth-of-type(3) td {
   border-bottom-color: transparent;
 }
 
-.App-logo {
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 @media (max-width: 540px) {
+  #Application > #GameOver,
+  #Application > #LandingPage,
   .h-fit-content {
     height: fit-content !important;
   }

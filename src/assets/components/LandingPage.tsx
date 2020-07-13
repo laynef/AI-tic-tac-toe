@@ -22,13 +22,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ startNewGame }) => {
         <img src={logo} alt="" />
         <div className="w-100 d-flex flex-column flex-lg-row mt-5 mb-5 justify-content-around">
           <button
-            className="btn btn-outline-secondary mb-3 mb-lg-0"
+            className="btn btn-outline-secondary ml-2 mr-2 ml-lg-0 mr-lg-0 mb-3 mb-lg-0"
             onClick={() => startNewGame(DifficultyType.Beatable)}
           >
             Play Beatable
           </button>
           <button
-            className="btn btn-outline-secondary"
+            className="btn btn-outline-secondary ml-2 mr-2 ml-lg-0 mr-lg-0"
             onClick={() => startNewGame(DifficultyType.Unbeatable)}
           >
             Play Impossible
