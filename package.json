@@ -23,8 +23,7 @@
     "typescript": "3.9.6"
   },
   "scripts": {
-    "start": "node build",
-    "dev": "react-ssr-scripts start",
+    "start": "react-ssr-scripts start",
     "build": "react-ssr-scripts build",
     "test": "react-ssr-scripts test",
     "eject": "react-ssr-scripts eject"
