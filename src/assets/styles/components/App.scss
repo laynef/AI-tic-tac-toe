@@ -18,6 +18,10 @@ td {
   border: 6px solid $grey;
 }
 
+.h-fit-content {
+  min-height: fit-content;
+}
+
 @media (max-width: 768px) {
   img {
     width: 100%;

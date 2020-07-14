@@ -26,12 +26,12 @@ const GameOver: React.FC<GameOverProps> = ({
   return (
     <div
       id="GameOver"
-      className="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center h-fit-content"
+      className="w-100 h-100 bg-light d-flex flex-column align-items-center justify-content-center"
     >
       <div
         className={`h-75 ${
           winner === PlayerType.Empty ? 'app ' : ''
-        }w-75 bg-white d-flex flex-column card align-items-center round-card justify-content-between shadow`}
+        }w-75 bg-white d-flex flex-column card align-items-center round-card justify-content-between shadow h-fit-content`}
       >
         <h1
           style={{ fontSize: '3.5rem' }}
