@@ -5,31 +5,29 @@
   "dependencies": {
     "@types/express": "4.17.7",
     "@types/jest": "26.0.4",
-    "@types/lodash": "^4.14.157",
+    "@types/lodash": "^4.17.17",
     "@types/node": "14.0.22",
     "@types/react": "16.9.42",
     "@types/react-dom": "16.9.8",
     "@types/webpack-env": "1.15.2",
     "escape-string-regexp": "^4.0.0",
-    "express": "^4.17.1",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
-    "lodash": "^4.17.19",
+    "eslint": "^6.8.0",
+    "express": "^4.21.2",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "lodash": "^4.17.21",
     "node-sass": "^4.14.1",
-    "prettier": "^2.0.5",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "prettier": "^2.8.8",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-ssr-scripts": "2.2.3",
     "typescript": "3.9.6"
   },
   "scripts": {
-    "start": "react-ssr-scripts start",
-    "build": "react-ssr-scripts build",
-    "test": "react-ssr-scripts test",
-    "eject": "react-ssr-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
+    "start": "npx react-scripts start",
+    "build": "npx react-scripts build",
+    "test": "npx react-scripts test",
+    "eject": "npx react-scripts eject"
   },
   "browserslist": {
     "production": [
